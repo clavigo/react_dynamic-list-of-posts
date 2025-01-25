@@ -1,11 +1,8 @@
-// import classNames from 'classnames';
-
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './App.scss';
 
 import { PostsList } from './components/PostsList';
-// import { PostDetails } from './components/PostDetails';
 import { UserSelector } from './components/UserSelector';
 import { Loader } from './components/Loader';
 import { useEffect, useState } from 'react';
@@ -26,8 +23,6 @@ export const App = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [isCommentsLoading, setIsCommentsLoading] = useState(false);
   const [isCommentsError, setIsCommentsError] = useState(false);
-
-  console.log(comments);
 
   useEffect(() => {
     client.get<User[]>('/users').then(setUsers);
@@ -69,8 +64,7 @@ export const App = () => {
       .then(commentFromServer =>
         setComments(prev => [...(prev || []), commentFromServer]),
       )
-      .catch()
-      .finally();
+      .catch(() => setIsCommentsError(true));
   };
 
   const handleDeleteComment = (commentId: number) => {
@@ -81,8 +75,7 @@ export const App = () => {
           prevComments.filter(prevComment => prevComment.id !== commentId),
         ),
       )
-      .catch()
-      .finally();
+      .catch(() => setIsCommentsError(true));
   };
 
   return (

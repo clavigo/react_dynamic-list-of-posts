@@ -35,7 +35,7 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
       setIsBodyEmpty(true);
     }
 
-    if (postId !== undefined) {
+    if (postId !== undefined && !isNameEmpty && !isEmailEmpty && !isBodyEmpty) {
       setIsLoading(true);
 
       handleAddComment(
